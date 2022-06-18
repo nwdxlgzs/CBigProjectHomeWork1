@@ -43,6 +43,8 @@ root/ ┬ database.txt
       | >>> 设计之初做了打log的准备，mkerrlog函数会往这里写错误日志
       ├ database.mdb
       | >>> 默认mdb数据库
+      ├ user.data
+      | >>> 账户数据
       ├ tmp_database_auto_save-{XXXXX}.temp.mdb
       | >>> 自动保存没有路径的mdb数据库
       └ <over>

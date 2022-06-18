@@ -1,35 +1,35 @@
 #include "mdb.h"
 /**
  * @brief mdb
- * ÕâÊÇµ×²ãÊı¾İ´æÈ¡ÊµÏÖ£¬ÓÃÓÚ½âÎömdbÎÄ¼ş£¬Ìá¹©¸ødatabase.cÊ¹ÓÃ
+ * è¿™æ˜¯åº•å±‚æ•°æ®å­˜å–å®ç°ï¼Œç”¨äºè§£æmdbæ–‡ä»¶ï¼Œæä¾›ç»™database.cä½¿ç”¨
  *
  */
  /**
-  * mdb¶ş½øÖÆÊı¾İ¿â½á¹¹(ËäÈ»½Ğmdb£¬²»ÊÇÎ¢ÈíµÄmdbÅ¶)
+  * mdbäºŒè¿›åˆ¶æ•°æ®åº“ç»“æ„(è™½ç„¶å«mdbï¼Œä¸æ˜¯å¾®è½¯çš„mdbå“¦)
   * #####################################################
-  * #  MDB_HEADER_TK            ÎÄ¼şÍ·(4)
+  * #  MDB_HEADER_TK            æ–‡ä»¶å¤´(4)
   * #  sizeof(int)              size(1)
   * #  size                     size(4)
   * #  --------------------------------------------------
-  * #  TK_START                 ¿ªÊ¼±ê¼Ç
-  * #  TK_xxx1                  ¼üÖµ
+  * #  TK_START                 å¼€å§‹æ ‡è®°
+  * #  TK_xxx1                  é”®å€¼
   * #  size                     size(4)
-  * #  xx1                      Öµ
-  * #  TK_xxx2                  ¼üÖµ
+  * #  xx1                      å€¼
+  * #  TK_xxx2                  é”®å€¼
   * #  size                     size(4)
-  * #  xx2                      Öµ
+  * #  xx2                      å€¼
   * #  ......
-  * #  TK_END                   ½áÊø±ê¼Ç
+  * #  TK_END                   ç»“æŸæ ‡è®°
   * #  --------------------------------------------------
-  * #  TK_START                 ¿ªÊ¼±ê¼Ç
-  * #  TK_xxx1                  ¼üÖµ
+  * #  TK_START                 å¼€å§‹æ ‡è®°
+  * #  TK_xxx1                  é”®å€¼
   * #  size                     size(4)
-  * #  xx1                      Öµ
-  * #  TK_xxx2                  ¼üÖµ
+  * #  xx1                      å€¼
+  * #  TK_xxx2                  é”®å€¼
   * #  size                     size(4)
-  * #  xx2                      Öµ
+  * #  xx2                      å€¼
   * #  ......
-  * #  TK_END                   ½áÊø±ê¼Ç
+  * #  TK_END                   ç»“æŸæ ‡è®°
   * #  --------------------------------------------------
   * #  ......
   * #####################################################
@@ -40,34 +40,34 @@ char* get_MDB_HEADER_TK(){
     memcpy(tk, MDB_HEADER_TK, sizeof(MDB_HEADER_TK));
     return tk;
 }
-//Éú³É¿ÕµÄcarInfoItem½á¹¹Ìå(ÔõÃ´ÕâÃ´³¤°¡¡­¡­)
+//ç”Ÿæˆç©ºçš„carInfoItemç»“æ„ä½“(æ€ä¹ˆè¿™ä¹ˆé•¿å•Šâ€¦â€¦)
 carInfoItem* gen_Empty_carInfoItem() {
-    carInfoItem* item = (carInfoItem*)malloc(sizeof(carInfoItem));//³µÁ¾ĞÅÏ¢
-    carBaseInfo* info = (carBaseInfo*)malloc(sizeof(carBaseInfo));//³µÁ¾»ù±¾ĞÅÏ¢
+    carInfoItem* item = (carInfoItem*)malloc(sizeof(carInfoItem));//è½¦è¾†ä¿¡æ¯
+    carBaseInfo* info = (carBaseInfo*)malloc(sizeof(carBaseInfo));//è½¦è¾†åŸºæœ¬ä¿¡æ¯
     item->info = info;
     info->carId = 0;
-    StringItem* carBrand = (StringItem*)malloc(sizeof(StringItem));//³µÁ¾Æ·ÅÆ
+    StringItem* carBrand = (StringItem*)malloc(sizeof(StringItem));//è½¦è¾†å“ç‰Œ
     carBrand->str = "";
     carBrand->size = 1;
     info->carBrand = carBrand;
-    StringItem* carModel = (StringItem*)malloc(sizeof(StringItem));//³µÁ¾ĞÍºÅ
+    StringItem* carModel = (StringItem*)malloc(sizeof(StringItem));//è½¦è¾†å‹å·
     carModel->str = "";
     carModel->size = 1;
     info->carModel = carModel;
     info->carPrice = 0;
     info->carAge = 0;
-    carFault* fault = (carFault*)malloc(sizeof(carFault));//³µÁ¾¹ÊÕÏ
+    carFault* fault = (carFault*)malloc(sizeof(carFault));//è½¦è¾†æ•…éšœ
     fault->hasRepair = 0;
     fault->hasFault = 0;
-    StringItem* faultDescribe = (StringItem*)malloc(sizeof(StringItem));//¹ÊÕÏÃèÊö
+    StringItem* faultDescribe = (StringItem*)malloc(sizeof(StringItem));//æ•…éšœæè¿°
     faultDescribe->str = "";
     faultDescribe->size = 1;
     fault->faultDescribe = faultDescribe;
     info->fault = fault;
-    orderInfo* order = (orderInfo*)malloc(sizeof(orderInfo));//¶©µ¥ĞÅÏ¢
+    orderInfo* order = (orderInfo*)malloc(sizeof(orderInfo));//è®¢å•ä¿¡æ¯
     item->order = order;
     order->status = carStatus_unknown;
-    Date* date = (Date*)malloc(sizeof(Date));//ÈÕÆÚ
+    Date* date = (Date*)malloc(sizeof(Date));//æ—¥æœŸ
     date->year = 0;
     date->month = 0;
     date->day = 0;
@@ -76,49 +76,49 @@ carInfoItem* gen_Empty_carInfoItem() {
     order->outPrice = 0;
     order->estimatePrice = 0;
     order->realPrice = 0;
-    personInfo* seller = (personInfo*)malloc(sizeof(personInfo));//Âô¼ÒĞÅÏ¢
+    personInfo* seller = (personInfo*)malloc(sizeof(personInfo));//å–å®¶ä¿¡æ¯
     seller->type = personType_seller;
-    StringItem* sellerName = (StringItem*)malloc(sizeof(StringItem));//Âô¼ÒĞÕÃû
+    StringItem* sellerName = (StringItem*)malloc(sizeof(StringItem));//å–å®¶å§“å
     sellerName->str = "";
     sellerName->size = 1;
     seller->name = sellerName;
-    StringItem* sellerPhone = (StringItem*)malloc(sizeof(StringItem));//Âô¼Òµç»°
+    StringItem* sellerPhone = (StringItem*)malloc(sizeof(StringItem));//å–å®¶ç”µè¯
     sellerPhone->str = "";
     sellerPhone->size = 1;
     seller->phone = sellerPhone;
     seller->id = 0;
     order->seller = seller;
-    personInfo* buyer = (personInfo*)malloc(sizeof(personInfo));//Âò¼ÒĞÅÏ¢
+    personInfo* buyer = (personInfo*)malloc(sizeof(personInfo));//ä¹°å®¶ä¿¡æ¯
     buyer->type = personType_buyer;
-    StringItem* buyerName = (StringItem*)malloc(sizeof(StringItem));//Âò¼ÒĞÕÃû
+    StringItem* buyerName = (StringItem*)malloc(sizeof(StringItem));//ä¹°å®¶å§“å
     buyerName->str = "";
     buyerName->size = 1;
     buyer->name = buyerName;
-    StringItem* buyerPhone = (StringItem*)malloc(sizeof(StringItem));//Âò¼Òµç»°
+    StringItem* buyerPhone = (StringItem*)malloc(sizeof(StringItem));//ä¹°å®¶ç”µè¯
     buyerPhone->str = "";
     buyerPhone->size = 1;
     buyer->phone = buyerPhone;
     buyer->id = 0;
     order->buyer = buyer;
-    personInfo* handler = (personInfo*)malloc(sizeof(personInfo));//¾­ÊÖÈËĞÅÏ¢
+    personInfo* handler = (personInfo*)malloc(sizeof(personInfo));//ç»æ‰‹äººä¿¡æ¯
     handler->type = personType_handler;
-    StringItem* handlerName = (StringItem*)malloc(sizeof(StringItem));//¾­ÊÖÈËĞÕÃû
+    StringItem* handlerName = (StringItem*)malloc(sizeof(StringItem));//ç»æ‰‹äººå§“å
     handlerName->str = "";
     handlerName->size = 1;
     handler->name = handlerName;
-    StringItem* handlePhone = (StringItem*)malloc(sizeof(StringItem));//¾­ÊÖÈËµç»°
+    StringItem* handlePhone = (StringItem*)malloc(sizeof(StringItem));//ç»æ‰‹äººç”µè¯
     handlePhone->str = "";
     handlePhone->size = 1;
     handler->phone = handlePhone;
     handler->id = 0;
     order->handler = handler;
-    personInfo* employee = (personInfo*)malloc(sizeof(personInfo));//Ô±¹¤ĞÅÏ¢
+    personInfo* employee = (personInfo*)malloc(sizeof(personInfo));//å‘˜å·¥ä¿¡æ¯
     employee->type = personType_employee;
-    StringItem* employeeName = (StringItem*)malloc(sizeof(StringItem));//Ô±¹¤ĞÕÃû
+    StringItem* employeeName = (StringItem*)malloc(sizeof(StringItem));//å‘˜å·¥å§“å
     employeeName->str = "";
     employeeName->size = 1;
     employee->name = employeeName;
-    StringItem* employeePhone = (StringItem*)malloc(sizeof(StringItem));//Ô±¹¤µç»°
+    StringItem* employeePhone = (StringItem*)malloc(sizeof(StringItem));//å‘˜å·¥ç”µè¯
     employeePhone->str = "";
     employeePhone->size = 1;
     employee->phone = employeePhone;
@@ -133,22 +133,22 @@ char* peekChars(char* buffer, int offset, int size) {
 }
 int undumpCarInfoItem(carInfoItem* item, enum MDB_ITEM_TK type, char* content, int size, int MDB_PLATNFORM_INT_SIZE);
 ListNode* readAllFromMdb(char* mdbpath) {
-    if (mdbpath == NULL) {//Ä¬ÈÏÂ·¾¶
+    if (mdbpath == NULL) {//é»˜è®¤è·¯å¾„
         mdbpath = MDB_DEFAULT_PATH;
     }
     Buffer* mdbbuffer = readFile(mdbpath, Boolean_FALSE);
-    if (mdbbuffer->isFail) {//´ò¿ªÊ§°Ü
+    if (mdbbuffer->isFail) {//æ‰“å¼€å¤±è´¥
         char* errmsg = malloc(sizeof(char) * 200 + strlen(mdbpath));
         memset(errmsg, 0, 200 + strlen(mdbpath));
-        sprintf(errmsg, "mdb£¨%s£©´ò¿ªÊ§°Ü£¡", mdbpath);
+        sprintf(errmsg, "mdbï¼ˆ%sï¼‰æ‰“å¼€å¤±è´¥ï¼", mdbpath);
         mkerrlog(errmsg);
         free(errmsg);
         return NULL;
     }
-    if (mdbbuffer->size == 0) {//ÎÄ¼şÎª¿Õ
+    if (mdbbuffer->size == 0) {//æ–‡ä»¶ä¸ºç©º
         char* errmsg = malloc(sizeof(char) * 200 + strlen(mdbpath));
         memset(errmsg, 0, 200 + strlen(mdbpath));
-        sprintf(errmsg, "mdb£¨%s£©Îª¿Õ£¡", mdbpath);
+        sprintf(errmsg, "mdbï¼ˆ%sï¼‰ä¸ºç©ºï¼", mdbpath);
         mkerrlog(errmsg);
         free(errmsg);
         return NULL;
@@ -157,13 +157,13 @@ ListNode* readAllFromMdb(char* mdbpath) {
     char* buffer = mdbbuffer->buffer;
     int offset = 0;
 
-    //ÅĞ¶ÏÎÄ¼şÍ·ÊÇ·ñÕıÈ·
+    //åˆ¤æ–­æ–‡ä»¶å¤´æ˜¯å¦æ­£ç¡®
     char* TMPBUF = peekChars(buffer, offset, 4);
     if (charcmp(TMPBUF, MDB_HEADER_TK, 4) != 0) {
         free(TMPBUF);
         char* errmsg = malloc(sizeof(char) * 200 + strlen(mdbpath));
         memset(errmsg, 0, 200 + strlen(mdbpath));
-        sprintf(errmsg, "mdb£¨%s£©ÎÄ¼şÍ·´íÎó£¡ÇëÈ·¶¨Êı¾İ¿âÕı³££¡£¨¸ÃÏîÄ¿Ë½ÓĞmdb½á¹¹²»ÊÇÎ¢ÈíµÄmdb£©", mdbpath);
+        sprintf(errmsg, "mdbï¼ˆ%sï¼‰æ–‡ä»¶å¤´é”™è¯¯ï¼è¯·ç¡®å®šæ•°æ®åº“æ­£å¸¸ï¼ï¼ˆè¯¥é¡¹ç›®ç§æœ‰mdbç»“æ„ä¸æ˜¯å¾®è½¯çš„mdbï¼‰", mdbpath);
         mkerrlog(errmsg);
         free(errmsg);
         free(mdbbuffer);
@@ -172,36 +172,33 @@ ListNode* readAllFromMdb(char* mdbpath) {
     free(TMPBUF);
     offset += 4;
 
-    //ÄÃµ½¸ÃÆ½Ì¨intµÄ´óĞ¡
+    //æ‹¿åˆ°è¯¥å¹³å°intçš„å¤§å°
     TMPBUF = peekChars(buffer, offset, 1);
     int MDB_PLATNFORM_INT_SIZE = *TMPBUF;
     MDB_PLATNFORM_INT_SIZE &= 0xFF;
     free(TMPBUF);
     offset += 1;
 
-    //»ñÈ¡Êı¾İ¿â´óĞ¡
+    //è·å–æ•°æ®åº“å¤§å°
     TMPBUF = peekChars(buffer, offset, MDB_PLATNFORM_INT_SIZE);
     int sizelen = char2int(TMPBUF, MDB_PLATNFORM_INT_SIZE);
     offset += MDB_PLATNFORM_INT_SIZE;
 
-    int realsize = 0;//Êµ¼Ê¶ÁÈ¡µÄÊı¾İ¿â´óĞ¡£¨·½±ã¼ì²éÊı¾İ¿âÊÇ·ñ±»ÆÆ»µ£©
+    int realsize = 0;//å®é™…è¯»å–çš„æ•°æ®åº“å¤§å°ï¼ˆæ–¹ä¾¿æ£€æŸ¥æ•°æ®åº“æ˜¯å¦è¢«ç ´åï¼‰
 
-    //»ñÈ¡Êı¾İ¿âÄÚÈİ
+    //è·å–æ•°æ®åº“å†…å®¹
     ListNode* head = NULL;
     ListNode* tail = NULL;
-    while ((*(buffer + offset) & 0xff) == TK_START) {//±éÀúÊı¾İ¿â
-        realsize++;//Êµ¼Ê¶ÁÈ¡Á¿¼Ó1
-        offset += 1;//ÒòÎª¸Õ²Å¶ÁÈ¡ÁËTK_START
-        carInfoItem* item = gen_Empty_carInfoItem();//Éú³ÉÒ»¸ö¿ÕµÄ³µÁ¾ĞÅÏ¢Ïî
-        tail = addListNode(tail, item);
-        if (head == NULL) {
-            head = tail;
-        }
-        while ((*(buffer + offset) & 0xff) != TK_END) {//±éÀú¼ÇÂ¼
-            //»ñÈ¡Êı¾İÀàĞÍ
+    while ((*(buffer + offset) & 0xff) == TK_START) {//éå†æ•°æ®åº“
+        int flagok = 0;
+        realsize++;//å®é™…è¯»å–é‡åŠ 1
+        offset += 1;//å› ä¸ºåˆšæ‰è¯»å–äº†TK_START
+        carInfoItem* item = gen_Empty_carInfoItem();//ç”Ÿæˆä¸€ä¸ªç©ºçš„è½¦è¾†ä¿¡æ¯é¡¹
+        while ((*(buffer + offset) & 0xff) != TK_END && offset < mdbbuffer->size) {//éå†è®°å½•
+            //è·å–æ•°æ®ç±»å‹
             int type = (int)(*(buffer + offset) & 0xff);
             offset += 1;
-            //»ñÈ¡Êı¾İ´óĞ¡
+            //è·å–æ•°æ®å¤§å°
             TMPBUF = peekChars(buffer, offset, MDB_PLATNFORM_INT_SIZE);
             int size = char2int(TMPBUF, MDB_PLATNFORM_INT_SIZE);
             free(TMPBUF);
@@ -210,29 +207,41 @@ ListNode* readAllFromMdb(char* mdbpath) {
             int result = 0;
             result = undumpCarInfoItem(item, type, buffer + offset - size, size, MDB_PLATNFORM_INT_SIZE);
             if (result < 0) {
-                // TODO: ÊÇ·ñÊÇĞÂÔöµÄÀàĞÍ£¿
+                // TODO: æ˜¯å¦æ˜¯æ–°å¢çš„ç±»å‹ï¼Ÿ
                 // return NULL;
+            } else {
+                flagok = 1;
             }
         }
-        offset += 1;//ÒòÎª¸Õ²Å¶ÁÈ¡ÁËTK_END
+        if (flagok == 0) {
+            realsize--;
+        } else {
+            tail = addListNode(tail, item);
+            if (head == NULL) {
+                head = tail;
+            }
+        }
+        offset += 1;//å› ä¸ºåˆšæ‰è¯»å–äº†TK_END
     }
-    //¼ì²éÊı¾İ¿âÊÇ·ñ±»ÆÆ»µ
+    //æ£€æŸ¥æ•°æ®åº“æ˜¯å¦è¢«ç ´å
     if (realsize != sizelen) {
         char* errmsg = malloc(sizeof(char) * 200 + strlen(mdbpath));
         memset(errmsg, 0, 200 + strlen(mdbpath));
-        sprintf(errmsg, "mdb£¨%s£©ÎÄ¼ş±»ÆÆ»µ£¡ÆÚ´ıÓĞ %d ¸öÏîÄ¿£¬È´µÃµ½ %d ¸öÏîÄ¿£¡", mdbpath, sizelen, realsize);
+        sprintf(errmsg, "mdbï¼ˆ%sï¼‰æ–‡ä»¶è¢«ç ´åï¼æœŸå¾…æœ‰ %d ä¸ªé¡¹ç›®ï¼Œå´å¾—åˆ° %d ä¸ªé¡¹ç›®ï¼", mdbpath, sizelen, realsize);
         mkerrlog(errmsg);
         free(errmsg);
+        free(mdbbuffer->buffer);
         free(mdbbuffer);
-        return NULL;//ÆäÊµ¿ÉÒÔ·µ»ØÒÑÖª²¿·ÖµÄ£¬Õâ¾ÍÎªÁË±¨´í´¦Àí£¬·µ»ØNULLÌáÊ¾
+        return NULL;//å…¶å®å¯ä»¥è¿”å›å·²çŸ¥éƒ¨åˆ†çš„ï¼Œè¿™å°±ä¸ºäº†æŠ¥é”™å¤„ç†ï¼Œè¿”å›NULLæç¤º
     }
+    free(mdbbuffer->buffer);
     free(mdbbuffer);
     return head;
 }
 
 int undumpCarInfoItem(carInfoItem* item, enum MDB_ITEM_TK type, char* content, int size, int MDB_PLATNFORM_INT_SIZE) {
     if (type == TK_START || type == TK_END) {
-        mkerrlog("ÔÚundumpCarInfoItemÊ±²»ÄÜ¶ÁÈ¡TK_START»òTK_ENDÀàĞÍµÄÊı¾İ£¡");
+        mkerrlog("åœ¨undumpCarInfoItemæ—¶ä¸èƒ½è¯»å–TK_STARTæˆ–TK_ENDç±»å‹çš„æ•°æ®ï¼");
         return 0;
     }
     switch (type) {
@@ -323,10 +332,10 @@ int undumpCarInfoItem(carInfoItem* item, enum MDB_ITEM_TK type, char* content, i
                 break;
             }
         case TK_person:
-            {//ÈËÔ±ĞÅÏ¢
-                int offset = MDB_PLATNFORM_INT_SIZE;//Õâ¸öÆ«ÒÆÁ¿ÊÇ¹Ì¶¨µÄvalue=1
+            {//äººå‘˜ä¿¡æ¯
+                int offset = MDB_PLATNFORM_INT_SIZE;//è¿™ä¸ªåç§»é‡æ˜¯å›ºå®šçš„value=1
                 personInfo* person = NULL;
-                switch (*(content + MDB_PLATNFORM_INT_SIZE)) {//»ñÈ¡ÈËÔ±ÀàĞÍ
+                switch (*(content + MDB_PLATNFORM_INT_SIZE)) {//è·å–äººå‘˜ç±»å‹
                     case personType_seller:
                         {
                             person = item->order->seller;
@@ -353,7 +362,7 @@ int undumpCarInfoItem(carInfoItem* item, enum MDB_ITEM_TK type, char* content, i
                 if (person == NULL) {
                     char* errmsg = malloc(sizeof(char) * 200);
                     memset(errmsg, 0, sizeof(char) * 200);
-                    sprintf(errmsg, "·¢ÏÖÎ´ÖªµÄÈËÔ±ÀàĞÍ£º%d£¡", *content);
+                    sprintf(errmsg, "å‘ç°æœªçŸ¥çš„äººå‘˜ç±»å‹ï¼š%dï¼", *content);
                     mkerrlog(errmsg);
                     free(errmsg);
                     return -1;
@@ -397,7 +406,7 @@ void fwriteinteger(FILE* fp, int i) {
 }
 
 void fwriteStringItem(FILE* fp, StringItem* stritem) {
-    if (stritem->size == 0) {//¿ÓËÀÎÒÁË
+    if (stritem->size == 0) {//å‘æ­»æˆ‘äº†
         fwriteint(fp, 0);
         return;
     }
@@ -438,10 +447,10 @@ void fwritepeopleInfo(FILE* fp, personInfo* person) {
     fwriteinteger(fp, person->id);
 }
 void saveAsMdb(char* mdbpath, ListNode* nodelink) {
-    if (mdbpath == NULL) {//Ä¬ÈÏÂ·¾¶
+    if (mdbpath == NULL) {//é»˜è®¤è·¯å¾„
         mdbpath = MDB_DEFAULT_PATH;
     }
-    rebindListNodeIndex(nodelink);//±£Ö¤indexÊÇÕıÈ·µÄ
+    rebindListNodeIndex(nodelink);//ä¿è¯indexæ˜¯æ­£ç¡®çš„
     ListNode* head = getHeadNode(nodelink);
     ListNode* tail = getTailNode(nodelink);
     ListNode* cur = head;
@@ -450,17 +459,17 @@ void saveAsMdb(char* mdbpath, ListNode* nodelink) {
     if (fp == NULL) {
         char* errmsg = malloc(sizeof(char) * 200 + strlen(mdbpath));
         memset(errmsg, 0, 200 + strlen(mdbpath));
-        sprintf(errmsg, "mdb£¨%s£©Ğ´ÈëÊ§°Ü£¡", mdbpath);
+        sprintf(errmsg, "mdbï¼ˆ%sï¼‰å†™å…¥å¤±è´¥ï¼", mdbpath);
         mkerrlog(errmsg);
         free(errmsg);
         return;
     }
-    //Ğ´ÈëÍ·²¿ĞÅÏ¢
+    //å†™å…¥å¤´éƒ¨ä¿¡æ¯
     fwrite(MDB_HEADER_TK, sizeof(char), 4, fp);
     //sizeof(int)
     char MDB_PLATNFORM_INT_SIZE = sizeof(int) & 0xff;
     fwrite(&MDB_PLATNFORM_INT_SIZE, sizeof(char), 1, fp);
-    //Ò»¹²ÓĞ¶àÉÙ¸ö
+    //ä¸€å…±æœ‰å¤šå°‘ä¸ª
     fwriteint(fp, size);
     while (cur != NULL) {
         carInfoItem* item = cur->value;
@@ -552,18 +561,18 @@ ListNode* readTxtData(char* txtpath) {
         txtpath = "database.txt";
     }
     Buffer* txtbuffer = readFile(txtpath, Boolean_TRUE);
-    if (txtbuffer->isFail) {//´ò¿ªÊ§°Ü
+    if (txtbuffer->isFail) {//æ‰“å¼€å¤±è´¥
         char* errmsg = malloc(sizeof(char) * 200 + strlen(txtpath));
         memset(errmsg, 0, 200 + strlen(txtpath));
-        sprintf(errmsg, "txt£¨%s£©´ò¿ªÊ§°Ü£¡", txtpath);
+        sprintf(errmsg, "txtï¼ˆ%sï¼‰æ‰“å¼€å¤±è´¥ï¼", txtpath);
         mkerrlog(errmsg);
         free(errmsg);
         return NULL;
     }
-    if (txtbuffer->size <= 1) {//ÎÄ¼şÎª¿Õ
+    if (txtbuffer->size <= 1) {//æ–‡ä»¶ä¸ºç©º
         char* errmsg = malloc(sizeof(char) * 200 + strlen(txtpath));
         memset(errmsg, 0, 200 + strlen(txtpath));
-        sprintf(errmsg, "txt£¨%s£©Îª¿Õ£¡", txtpath);
+        sprintf(errmsg, "txtï¼ˆ%sï¼‰ä¸ºç©ºï¼", txtpath);
         mkerrlog(errmsg);
         free(errmsg);
         return NULL;
@@ -583,7 +592,7 @@ ListNode* readTxtData(char* txtpath) {
         }
     }
     offset = 0;
-    //ÊÖ¶¯È¥¶ÁÈ¡ĞĞÖµ
+    //æ‰‹åŠ¨å»è¯»å–è¡Œå€¼
     char** linecontents = malloc(sizeof(char*) * lines);
     int i;
     for (i = 0; i < lines; i++) {
@@ -602,9 +611,9 @@ ListNode* readTxtData(char* txtpath) {
         offset++;
     }
     /**
-     * ½á¹¹
+     * ç»“æ„
      * carId   carBrand carModel carPrice carAge hasRepair hasFault faultDescribe status date      inPrice outPrice estimatePrice realPrice sellername sellerphone buyername  buyerphone  handlername handlerphone employeename employeeid
-     * 1000001 °ÂµÏ     ZQ70     809000    10    ·ñ         ·ñ       ÎŞ¹ÊÕÏ        Ô¤¶¨    2008/12/1 647200  776640   621312         -1       ÀîÏ¼       50561349942 ÕÅÎ°       67253388023 ÍõÃô         69165561218  ÁõÎ°         8450
+     * 1000001 å¥¥è¿ª     ZQ70     809000    10    å¦         å¦       æ— æ•…éšœ        é¢„å®š    2008/12/1 647200  776640   621312         -1       æéœ       50561349942 å¼ ä¼Ÿ       67253388023 ç‹æ•         69165561218  åˆ˜ä¼Ÿ         8450
      */
     ListNode* head = NULL;
     ListNode* cur = NULL;
@@ -642,7 +651,7 @@ ListNode* readTxtData(char* txtpath) {
         char handlerphone[30] = { 0 };
         char employeename[30] = { 0 };
         int employeeid = 0;
-        //¿ª°Ú£¬Ö±½ÓÒ»¿ÚÆø¶ÁÍê
+        //å¼€æ‘†ï¼Œç›´æ¥ä¸€å£æ°”è¯»å®Œ
         sscanf(line, "%d%s%s%d%d\
         %s%s%s\
         %s\
@@ -666,24 +675,24 @@ ListNode* readTxtData(char* txtpath) {
         setStringItem(item->info->carModel, carModel);
         item->info->carPrice = carPrice;
         item->info->carAge = carAge;
-        if (strcmp(hasRepair, "ÊÇ") == 0) {
+        if (strcmp(hasRepair, "æ˜¯") == 0) {
             item->info->fault->hasRepair = Boolean_TRUE;
         } else {
             item->info->fault->hasRepair = Boolean_FALSE;
         }
-        if (strcmp(hasFault, "ÊÇ") == 0) {
+        if (strcmp(hasFault, "æ˜¯") == 0) {
             item->info->fault->hasFault = Boolean_TRUE;
         } else {
             item->info->fault->hasFault = Boolean_FALSE;
         }
         setStringItem(item->info->fault->faultDescribe, faultDescribe);
-        if (strcmp(status, "Èë¿â") == 0) {
+        if (strcmp(status, "å…¥åº“") == 0) {
             item->order->status = carStatus_inStock;
-        } else if (strcmp(status, "³ö¿â") == 0) {
+        } else if (strcmp(status, "å‡ºåº“") == 0) {
             item->order->status = carStatus_outStock;
-        } else if (strcmp(status, "Ô¤¶¨") == 0) {
+        } else if (strcmp(status, "é¢„å®š") == 0) {
             item->order->status = carStatus_reserved;
-        } else if (strcmp(status, "ÒÑÊÛ") == 0) {
+        } else if (strcmp(status, "å·²å”®") == 0) {
             item->order->status = carStatus_sold;
         } else {
             item->order->status = carStatus_unknown;

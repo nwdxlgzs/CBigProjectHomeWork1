@@ -1,7 +1,7 @@
 #include "UIAction.h"
 /*
-¸ºÔğÊä³öUIµÄ´òÓ¡¿âµÄÏìÓ¦
-Ã»É¶×¢ÊÍ£¬±äÁ¿ÃüÃû¾ÍËµµÄºÜÇå³şÁË£¬ÔÙĞ´×¢ÊÍÌ«×ö×÷ÁË
+è´Ÿè´£è¾“å‡ºUIçš„æ‰“å°åº“çš„å“åº”
+æ²¡å•¥æ³¨é‡Šï¼Œå˜é‡å‘½åå°±è¯´çš„å¾ˆæ¸…æ¥šäº†ï¼Œå†å†™æ³¨é‡Šå¤ªåšä½œäº†
 */
 static user_data* CurUserData = NULL;
 static user_data** CurUserDatas = NULL;
@@ -9,22 +9,22 @@ static int CurUserDatasSize = 0;
 static ListNode* nodelink = NULL;
 static StringItem* nodelinkpath = NULL;
 void Action_Welcome_case_errinput() {
-    MessageBox(NULL, "Ñ¡Ïî·Ç·¨£¬ÇëÖØĞÂÊäÈë£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "é€‰é¡¹éæ³•ï¼Œè¯·é‡æ–°è¾“å…¥ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_Welcome_case_errinput;
 void Action_Welcome() {
     int choice = 0;
     scanf("%d", &choice);
     char tmp;
-    while ((tmp = getchar()) != '\n');//Çå¿Õ»º³åÇø
+    while ((tmp = getchar()) != '\n');//æ¸…ç©ºç¼“å†²åŒº
     switch (choice) {
-        case 1://1.µÇÂ¼ÕËºÅ
+        case 1://1.ç™»å½•è´¦å·
             UI_login();
             break;
-        case 2://2.×¢²áÕËºÅ
+        case 2://2.æ³¨å†Œè´¦å·
             UI_register();
             break;
-        case 3://3.¹Ø±Õ³ÌĞò
+        case 3://3.å…³é—­ç¨‹åº
             exit(0);
             break;
         default:
@@ -53,7 +53,7 @@ void Action_login() {
     UI_login_ask_password(accitem);
 }
 void Action_login_case_NULL_UD() {
-    MessageBox(NULL, "ÃÜÂë»òÕËºÅ´íÎó£¬²éÎŞ´ËÈË£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "å¯†ç æˆ–è´¦å·é”™è¯¯ï¼ŒæŸ¥æ— æ­¤äººï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_login_case_NULL_UD;
 void Action_login_ask_password(StringItem* accitem) {
@@ -61,10 +61,11 @@ void Action_login_ask_password(StringItem* accitem) {
     char ch = 0;
     int i = 0;
     for (;;) {
-        ch = getchar();
-        if (ch == '\n') {
+        ch = getch();
+        if (ch == '\n'||ch=='\r') {
             break;
         }
+        putchar('*');
         password[i++] = ch;
     }
     StringItem* passitem = trim(password, i);
@@ -85,7 +86,7 @@ void Action_login_ask_password(StringItem* accitem) {
     } else {
         CurUserData = data;
     }
-    // if (CurUserData->userType > userType_employee) {//cust¼¸ºõÃ»´æÔÚ¸Ğ¡­¡­
+    // if (CurUserData->userType > userType_employee) {//custå‡ ä¹æ²¡å­˜åœ¨æ„Ÿâ€¦â€¦
     //     UI_Welcome();
     // } else {
     //     UI_MainMenu();
@@ -93,7 +94,7 @@ void Action_login_ask_password(StringItem* accitem) {
     UI_MainMenu();
 }
 void Action_register_case_NULL_CurUserData() {
-    MessageBox(NULL, "ÇëÏÈµÇÂ¼ÕËºÅ£¨³õÊ¼×¢²áÊ¹ÓÃÊ±Ê¹ÓÃdevÏÈ¿ªÉèadminÈ¨ÏŞµÄÕËºÅºóÊ¹ÓÃ£©£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "è¯·å…ˆç™»å½•è´¦å·ï¼ˆåˆå§‹æ³¨å†Œä½¿ç”¨æ—¶ä½¿ç”¨devå…ˆå¼€è®¾adminæƒé™çš„è´¦å·åä½¿ç”¨ï¼‰ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_register_case_NULL_CurUserData;
 void Action_register() {
@@ -125,10 +126,11 @@ void Action_register_ask_password(StringItem* accitem) {
     char ch = 0;
     int i = 0;
     for (;;) {
-        ch = getchar();
-        if (ch == '\n') {
+        ch = getch();
+        if (ch == '\n'||ch=='\r') {
             break;
         }
+        putchar('*');
         password[i++] = ch;
     }
     StringItem* passitem = trim(password, i);
@@ -139,7 +141,7 @@ void Action_register_ask_password(StringItem* accitem) {
     UI_register_ask_type(accitem, passitem);
 }
 void Action_register_case_errtype() {
-    MessageBox(NULL, "ÊäÈëÁË´íÎóµÄÀàĞÍ£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "è¾“å…¥äº†é”™è¯¯çš„ç±»å‹ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_register_case_errtype;
 
@@ -160,13 +162,13 @@ void Action_register_ask_type(StringItem* accitem, StringItem* passitem) {
         return;
     }
     int type = userType_cust;
-    if (strcmp(typestritem->str, "admin") == 0 || strcmp(typestritem->str, "1") == 0 || strcmp(typestritem->str, "¹ÜÀíÔ±") == 0) {
+    if (strcmp(typestritem->str, "admin") == 0 || strcmp(typestritem->str, "1") == 0 || strcmp(typestritem->str, "ç®¡ç†å‘˜") == 0) {
         type = userType_admin;
-    } else if (strcmp(typestritem->str, "manager") == 0 || strcmp(typestritem->str, "2") == 0 || strcmp(typestritem->str, "¾­Àí") == 0) {
+    } else if (strcmp(typestritem->str, "manager") == 0 || strcmp(typestritem->str, "2") == 0 || strcmp(typestritem->str, "ç»ç†") == 0) {
         type = userType_manager;
-    } else if (strcmp(typestritem->str, "employee") == 0 || strcmp(typestritem->str, "3") == 0 || strcmp(typestritem->str, "Ô±¹¤") == 0) {
+    } else if (strcmp(typestritem->str, "employee") == 0 || strcmp(typestritem->str, "3") == 0 || strcmp(typestritem->str, "å‘˜å·¥") == 0) {
         type = userType_employee;
-    } else if (strcmp(typestritem->str, "cust") == 0 || strcmp(typestritem->str, "4") == 0 || strcmp(typestritem->str, "¿Í»§") == 0 || strcmp(typestritem->str, "customer") == 0 || strcmp(typestritem->str, "ÓÃ»§") == 0) {
+    } else if (strcmp(typestritem->str, "cust") == 0 || strcmp(typestritem->str, "4") == 0 || strcmp(typestritem->str, "å®¢æˆ·") == 0 || strcmp(typestritem->str, "customer") == 0 || strcmp(typestritem->str, "ç”¨æˆ·") == 0) {
         type = userType_cust;
     } else {
         HANDLE_Action_register_case_errtype = (HANDLE)_beginthread(Action_register_case_errtype, 0, NULL);
@@ -175,7 +177,7 @@ void Action_register_ask_type(StringItem* accitem, StringItem* passitem) {
         return;
     }
     addUserData(CurUserDatas, CurUserDatasSize, CurUserData, type, accitem, passitem);
-    // if (CurUserData->userType > userType_employee) {//cust¼¸ºõÃ»´æÔÚ¸Ğ¡­¡­
+    // if (CurUserData->userType > userType_employee) {//custå‡ ä¹æ²¡å­˜åœ¨æ„Ÿâ€¦â€¦
     //     UI_Welcome();
     // } else {
     //     UI_MainMenu();
@@ -183,7 +185,7 @@ void Action_register_ask_type(StringItem* accitem, StringItem* passitem) {
     UI_MainMenu();
 }
 void Action_MainMenu_case_noper() {
-    MessageBox(NULL, "È¨ÏŞ²»¹»£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "æƒé™ä¸å¤Ÿï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_MainMenu_case_noper;
 void Action_MainMenu() {
@@ -200,11 +202,11 @@ void Action_MainMenu() {
     int choice = 0;
     scanf("%d", &choice);
     char tmp;
-    while ((tmp = getchar()) != '\n');//Çå¿Õ»º³åÇø
+    while ((tmp = getchar()) != '\n');//æ¸…ç©ºç¼“å†²åŒº
     switch (choice) {
         case 1:
             {
-                //1.µÇ³öÕËºÅ
+                //1.ç™»å‡ºè´¦å·
                 logout(CurUserData);
                 CurUserData = NULL;
                 CurUserDatas = NULL;
@@ -214,20 +216,20 @@ void Action_MainMenu() {
             }
         case 2:
             {
-                //2.×¢²áÕËºÅ
+                //2.æ³¨å†Œè´¦å·
                 UI_register();
                 break;
             }
         case 3:
             {
-                //3.²é¿´ÕËºÅĞÅÏ¢
+                //3.æŸ¥çœ‹è´¦å·ä¿¡æ¯
                 UI_peek_userinfo(CurUserData);
                 break;
             }
         case 4:
             {
-                //4.É¾³ıÕËºÅ
-                if (CurUserData->userType > userType_manager) {//employeeÎŞÈ¨
+                //4.åˆ é™¤è´¦å·
+                if (CurUserData->userType > userType_manager) {//employeeæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -238,8 +240,8 @@ void Action_MainMenu() {
             }
         case 5:
             {
-                //5.´ò¿ªmdbÊı¾İ¿â
-                if (CurUserData->userType > userType_employee) {//custÎŞÈ¨
+                //5.æ‰“å¼€mdbæ•°æ®åº“
+                if (CurUserData->userType > userType_employee) {//custæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -249,8 +251,8 @@ void Action_MainMenu() {
                 break;
             }
         case 6:
-            {//6.txtÊı¾İµ¼Èë£¨×Ô¶¯¸½¼ÓÔÚµ±Ç°mdbÖĞ±£´æ£©
-                if (CurUserData->userType > userType_manager) {//employeeÎŞÈ¨
+            {//6.txtæ•°æ®å¯¼å…¥ï¼ˆè‡ªåŠ¨é™„åŠ åœ¨å½“å‰mdbä¸­ä¿å­˜ï¼‰
+                if (CurUserData->userType > userType_manager) {//employeeæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -261,8 +263,8 @@ void Action_MainMenu() {
             }
         case 7:
             {
-                //7.mdbµ¼³ö
-                if (CurUserData->userType > userType_employee) {//custÎŞÈ¨
+                //7.mdbå¯¼å‡º
+                if (CurUserData->userType > userType_employee) {//custæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -272,8 +274,8 @@ void Action_MainMenu() {
                 break;
             }
         case 8:
-            {//8.ÊäÈëµ¥ÌõĞÂÊı¾İ
-                if (CurUserData->userType > userType_manager) {//employeeÎŞÈ¨
+            {//8.è¾“å…¥å•æ¡æ–°æ•°æ®
+                if (CurUserData->userType > userType_manager) {//employeeæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -283,8 +285,8 @@ void Action_MainMenu() {
                 break;
             }
         case 9:
-            {//9.É¾³ıÊı¾İ
-                if (CurUserData->userType > userType_manager) {//employeeÎŞÈ¨
+            {//9.åˆ é™¤æ•°æ®
+                if (CurUserData->userType > userType_manager) {//employeeæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -294,8 +296,8 @@ void Action_MainMenu() {
                 break;
             }
         case 10:
-            {//10.²é¿´Êı¾İ
-                if (CurUserData->userType > userType_employee) {//custÎŞÈ¨
+            {//10.æŸ¥çœ‹æ•°æ®
+                if (CurUserData->userType > userType_employee) {//custæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -305,8 +307,8 @@ void Action_MainMenu() {
                 break;
             }
         case 11:
-            {//11.ĞŞ¸ÄÊı¾İ
-                if (CurUserData->userType > userType_manager) {//employeeÎŞÈ¨
+            {//11.ä¿®æ”¹æ•°æ®
+                if (CurUserData->userType > userType_manager) {//employeeæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -316,8 +318,8 @@ void Action_MainMenu() {
                 break;
             }
         case 12:
-            {//12.Êı¾İÍ³¼Æ
-                if (CurUserData->userType > userType_employee) {//custÎŞÈ¨
+            {//12.æ•°æ®ç»Ÿè®¡
+                if (CurUserData->userType > userType_employee) {//custæ— æƒ
                     HANDLE_Action_MainMenu_case_noper = (HANDLE)_beginthread(Action_MainMenu_case_noper, 0, NULL);
                     UI_MainMenu();
                     WaitForSingleObject(HANDLE_Action_MainMenu_case_noper, INFINITE);
@@ -327,7 +329,7 @@ void Action_MainMenu() {
                 break;
             }
         case 13:
-            {//13.¹Ø±Õ³ÌĞò
+            {//13.å…³é—­ç¨‹åº
                 exit(0);
                 break;
             }
@@ -340,15 +342,15 @@ void Action_MainMenu() {
 }
 void Action_peek_userinfo() {
     char ch;
-    while ((ch = getchar()) != '\n');//Çå¿Õ»º³åÇø
+    while ((ch = getchar()) != '\n');//æ¸…ç©ºç¼“å†²åŒº
     UI_MainMenu();
 }
 void Action_delete_user_case_rmself() {
-    MessageBox(NULL, "²»¿ÉÒÔÉ¾³ı×Ô¼º»òÕß³õÊ¼devÕËºÅ£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "ä¸å¯ä»¥åˆ é™¤è‡ªå·±æˆ–è€…åˆå§‹devè´¦å·ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_delete_user_case_rmself;
 void Action_delete_user_case_rmerr() {
-    MessageBox(NULL, "·¢Éú´íÎó£¡Çë¼ì²é´íÎóÈÕÖ¾£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "å‘ç”Ÿé”™è¯¯ï¼è¯·æ£€æŸ¥é”™è¯¯æ—¥å¿—ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_delete_user_case_rmerr;
 void Action_delete_user(user_data* lCurUserData, user_data** lCurUserDatas, int* lCurUserDatasSize) {
@@ -377,17 +379,17 @@ void Action_delete_user(user_data* lCurUserData, user_data** lCurUserDatas, int*
     if (ok != 0) {
         HANDLE_Action_delete_user_case_rmerr = (HANDLE)_beginthread(Action_delete_user_case_rmerr, 0, NULL);
         WaitForSingleObject(HANDLE_Action_delete_user_case_rmerr, INFINITE);
-    } else {//ÖØĞÂ¶ÁÈ¡Êı¾İ
+    } else {//é‡æ–°è¯»å–æ•°æ®
         CurUserDatas = readUserData(&CurUserDatasSize);
     }
     UI_MainMenu();
 }
 void Action_openMDB_sendMsg() {
-    MessageBox(NULL, "mdbÊı¾İ¿â´ò¿ªÊ§°Ü£¬Çë²é¿´´íÎóÈÕÖ¾£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "mdbæ•°æ®åº“æ‰“å¼€å¤±è´¥ï¼Œè¯·æŸ¥çœ‹é”™è¯¯æ—¥å¿—ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_openMDB_sendMsg;
 void Action_openMDB() {
-    //±£´æµ±Ç°Êı¾İÈ»ºóÇåµôËü£¬µ½Ê±ºò¸ø±ğµÄMDBÎÄ¼şÌÚÖ¸Õë
+    //ä¿å­˜å½“å‰æ•°æ®ç„¶åæ¸…æ‰å®ƒï¼Œåˆ°æ—¶å€™ç»™åˆ«çš„MDBæ–‡ä»¶è…¾æŒ‡é’ˆ
     if (nodelink != NULL && nodelinkpath != NULL) {
         saveAsMdb(nodelinkpath->str, nodelink);
         ListNode* head = getHeadNode(nodelink);
@@ -400,7 +402,7 @@ void Action_openMDB() {
         freeStringItem(nodelinkpath);
         nodelinkpath = NULL;
         nodelink = NULL;
-    } else if (nodelink != NULL && nodelinkpath == NULL) {//Ã»¶ÁÈ¡mdbµ«ÊÇÓĞÊı¾İ
+    } else if (nodelink != NULL && nodelinkpath == NULL) {//æ²¡è¯»å–mdbä½†æ˜¯æœ‰æ•°æ®
         char tmppath[1024] = { 0 };
         char* t = getNowTimeString();
         sprintf(tmppath, "%s-%s.temp.mdb", "tmp_database_auto_save", t);
@@ -435,10 +437,10 @@ void Action_openMDB() {
         nodelinkpath->str = (char*)malloc(sizeof(char) * (nodelinkpath->size));
         memcpy(nodelinkpath->str, MDB_DEFAULT_PATH, nodelinkpath->size);
     } else {
-        //win11¸´ÖÆÎÄ¼şµØÖ·¿ÉÄÜ»áÓĞ ' or "
+        //win11å¤åˆ¶æ–‡ä»¶åœ°å€å¯èƒ½ä¼šæœ‰ ' or "
         if (accitem->str[0] == '\"' || accitem->str[0] == '\'') {
             char* nstr = (char*)malloc(accitem->size - 2);
-            memcpy(nstr, accitem->str + 1, accitem->size - 2);//È¥µôÒıºÅ(Ê×Î²)
+            memcpy(nstr, accitem->str + 1, accitem->size - 2);//å»æ‰å¼•å·(é¦–å°¾)
             nstr[accitem->size - 3] = '\0';
             accitem->str = nstr;
             accitem->size = accitem->size - 2;
@@ -472,7 +474,7 @@ void Action_txt_import(ListNode* Rnodelink) {
     }
     if (accitem->str[0] == '\"' || accitem->str[0] == '\'') {
         char* nstr = (char*)malloc(accitem->size - 2);
-        memcpy(nstr, accitem->str + 1, accitem->size - 2);//È¥µôÒıºÅ(Ê×Î²)
+        memcpy(nstr, accitem->str + 1, accitem->size - 2);//å»æ‰å¼•å·(é¦–å°¾)
         nstr[accitem->size - 3] = '\0';
         accitem->str = nstr;
         accitem->size = accitem->size - 2;
@@ -480,7 +482,7 @@ void Action_txt_import(ListNode* Rnodelink) {
     if (Rnodelink == NULL) {
         nodelink = readTxtData(accitem->str);
         Rnodelink = nodelink;
-    } else {//Ìí¼ÓÊı¾İ
+    } else {//æ·»åŠ æ•°æ®
         ListNode* tail = getTailNode(Rnodelink);
         ListNode* newnode = readTxtData(accitem->str);
         if (newnode == NULL) {
@@ -493,7 +495,7 @@ void Action_txt_import(ListNode* Rnodelink) {
         nodelink = Rnodelink;
         if (nodelinkpath != NULL) {
             saveAsMdb(nodelinkpath->str, Rnodelink);
-        } else if (nodelinkpath == NULL) {//Ã»¶ÁÈ¡mdbµ«ÊÇÓĞÊı¾İ
+        } else if (nodelinkpath == NULL) {//æ²¡è¯»å–mdbä½†æ˜¯æœ‰æ•°æ®
             char tmppath[1024] = { 0 };
             char* t = getNowTimeString();
             sprintf(tmppath, "%s-%s.temp.mdb", "tmp_database_auto_save", t);
@@ -504,7 +506,7 @@ void Action_txt_import(ListNode* Rnodelink) {
     UI_MainMenu();
 }
 void Action_export_mdb_NULLNL() {
-    MessageBox(NULL, "µ±Ç°ÊÇ¿ÕÊı¾İµ¼³ö£¬ÒÑ¾­Ö´ĞĞµ¼³ö£¬µ«ÊÇ¿ÉÄÜÓĞÎÊÌâ£¡", "ÌáÊ¾", MB_OK);
+    MessageBox(NULL, "å½“å‰æ˜¯ç©ºæ•°æ®å¯¼å‡ºï¼Œå·²ç»æ‰§è¡Œå¯¼å‡ºï¼Œä½†æ˜¯å¯èƒ½æœ‰é—®é¢˜ï¼", "æç¤º", MB_OK);
 }
 HANDLE HANDLE_Action_export_mdb_NULLNL;
 void Action_export_mdb(ListNode* nodelink) {
@@ -526,24 +528,24 @@ void Action_export_mdb(ListNode* nodelink) {
         nodelinkpath = mdbitem;
     }
     if (nodelink == NULL) {
-        //¿ÕÒ²ÊÇÒ»ÖÖÇé¿ö
+        //ç©ºä¹Ÿæ˜¯ä¸€ç§æƒ…å†µ
         char* MDB_HEADER_TK = get_MDB_HEADER_TK();
         FILE* fp = fopen(mdbpath, "wb");
         if (fp == NULL) {
             char* errmsg = malloc(sizeof(char) * 200 + strlen(mdbitem->str));
             memset(errmsg, 0, 200 + strlen(mdbitem->str));
-            sprintf(errmsg, "mdb£¨%s£©Ğ´ÈëÊ§°Ü£¡", mdbitem->str);
+            sprintf(errmsg, "mdbï¼ˆ%sï¼‰å†™å…¥å¤±è´¥ï¼", mdbitem->str);
             mkerrlog(errmsg);
             free(errmsg);
             free(MDB_HEADER_TK);
             return;
         }
-        //Ğ´ÈëÍ·²¿ĞÅÏ¢
+        //å†™å…¥å¤´éƒ¨ä¿¡æ¯
         fwrite(MDB_HEADER_TK, sizeof(char), 4, fp);
         //sizeof(int)
         char MDB_PLATNFORM_INT_SIZE = sizeof(int) & 0xff;
         fwrite(&MDB_PLATNFORM_INT_SIZE, sizeof(char), 1, fp);
-        //Ò»¹²ÓĞ¶àÉÙ¸ö
+        //ä¸€å…±æœ‰å¤šå°‘ä¸ª
         int len = 0;
         fwrite(&len, sizeof(int), 1, fp);
         fclose(fp);
@@ -561,32 +563,32 @@ void Action_append_new_data() {
     if (nodelink != NULL) {
         nodelink = getTailNode(nodelink);
     }
-    //ÕâÒ»²½Ì«ÔÓËéÁË£¬º£°²UI-Action¸ñÊ½Ğ´µ½ËÀÁË£¬ÕâÀï³Ğµ£²¿·Ö¹¦ÄÜ
+    //è¿™ä¸€æ­¥å¤ªæ‚ç¢äº†ï¼Œæµ·å®‰UI-Actionæ ¼å¼å†™åˆ°æ­»äº†ï¼Œè¿™é‡Œæ‰¿æ‹…éƒ¨åˆ†åŠŸèƒ½
     carInfoItem* newData = gen_Empty_carInfoItem();
-    //ÊµÔÚÊÇÌ«¶àÁË£¬ÕâÀïÖ»ºÃÔ¤ÉèÒ»ÏÂÁË
+    //å®åœ¨æ˜¯å¤ªå¤šäº†ï¼Œè¿™é‡Œåªå¥½é¢„è®¾ä¸€ä¸‹äº†
     char CII_K_ARR[][256] = {
-        "ÇëÊäÈë³µÁ¾±àºÅ(carId)£º",
-        "ÇëÊäÈë³µÁ¾Æ·ÅÆ(carBrand)£º",
-        "ÇëÊäÈë³µÁ¾ĞÍºÅ(carModel)£º",
-        "ÇëÊäÈëÔ­¼Û(carPrice)£º",
-        "ÇëÊäÈë³µÁä(carAge)£º",
-        "ÇëÊäÈëÊÇ·ñÓĞ´óĞŞ(hasRepair)£º",
-        "ÇëÊäÈëÊÇ·ñÓĞ¹ÊÕÏ(hasFault)£º",
-        "ÇëÊäÈë¹ÊÕÏÃèÊö£¬Ã»ÓĞÇëÌîĞ´¡°ÎŞ¹ÊÕÏ¡±(faultDescribe)£º",
-        "ÇëÊäÈë×´Ì¬(status)£º",
-        "ÇëÊäÈëÈÕÆÚ(date)£º",
-        "ÇëÊäÈë½ø¼Û(inPrice)£º",
-        "ÇëÊäÈëÏúÊÛ¼Û(outPrice)£º",
-        "ÇëÊäÈë¹À¼Æ¼Û(estimatePrice)£º",
-        "ÇëÊäÈëÊµÊÛ¼Û£¬Î´ÊÛÇëÌîĞ´¡°-1¡±(realPrice)£º",
-        "ÇëÊäÈëÂô¼ÒĞÕÃû(sellerName)£º",
-        "ÇëÊäÈëÂô¼Òµç»°(sellerPhone)£º",
-        "ÇëÊäÈëÂò¼ÒĞÕÃû(buyerName)£º",
-        "ÇëÊäÈëÂò¼Òµç»°(buyerPhone)£º",
-        "ÇëÊäÈë¾­ÊÖÈËĞÕÃû(handlerName)£º",
-        "ÇëÊäÈë¾­ÊÖÈËµç»°(handlerPhone)£º",
-        "ÇëÊäÈëÔ±¹¤ĞÕÃû(employeeName)£º",
-        "ÇëÊäÈëÔ±¹¤¹¤ºÅ(employeeId)£º",
+        "è¯·è¾“å…¥è½¦è¾†ç¼–å·(carId)ï¼š",
+        "è¯·è¾“å…¥è½¦è¾†å“ç‰Œ(carBrand)ï¼š",
+        "è¯·è¾“å…¥è½¦è¾†å‹å·(carModel)ï¼š",
+        "è¯·è¾“å…¥åŸä»·(carPrice)ï¼š",
+        "è¯·è¾“å…¥è½¦é¾„(carAge)ï¼š",
+        "è¯·è¾“å…¥æ˜¯å¦æœ‰å¤§ä¿®(hasRepair)ï¼š",
+        "è¯·è¾“å…¥æ˜¯å¦æœ‰æ•…éšœ(hasFault)ï¼š",
+        "è¯·è¾“å…¥æ•…éšœæè¿°ï¼Œæ²¡æœ‰è¯·å¡«å†™â€œæ— æ•…éšœâ€(faultDescribe)ï¼š",
+        "è¯·è¾“å…¥çŠ¶æ€(status)ï¼š",
+        "è¯·è¾“å…¥æ—¥æœŸ(date)ï¼š",
+        "è¯·è¾“å…¥è¿›ä»·(inPrice)ï¼š",
+        "è¯·è¾“å…¥é”€å”®ä»·(outPrice)ï¼š",
+        "è¯·è¾“å…¥ä¼°è®¡ä»·(estimatePrice)ï¼š",
+        "è¯·è¾“å…¥å®å”®ä»·ï¼Œæœªå”®è¯·å¡«å†™â€œ-1â€(realPrice)ï¼š",
+        "è¯·è¾“å…¥å–å®¶å§“å(sellerName)ï¼š",
+        "è¯·è¾“å…¥å–å®¶ç”µè¯(sellerPhone)ï¼š",
+        "è¯·è¾“å…¥ä¹°å®¶å§“å(buyerName)ï¼š",
+        "è¯·è¾“å…¥ä¹°å®¶ç”µè¯(buyerPhone)ï¼š",
+        "è¯·è¾“å…¥ç»æ‰‹äººå§“å(handlerName)ï¼š",
+        "è¯·è¾“å…¥ç»æ‰‹äººç”µè¯(handlerPhone)ï¼š",
+        "è¯·è¾“å…¥å‘˜å·¥å§“å(employeeName)ï¼š",
+        "è¯·è¾“å…¥å‘˜å·¥å·¥å·(employeeId)ï¼š",
     };
     enum wanna_VTYPE {
         wanna_String = 0,
@@ -694,15 +696,15 @@ void Action_append_new_data() {
                             {
                                 //status
                                 char* tmp = stritem->str;
-                                if (strcmp(tmp, "Î´Öª") == 0 || strcmp(tmp, "unknown") == 0 || strcmp(tmp, "0") == 0) {
+                                if (strcmp(tmp, "æœªçŸ¥") == 0 || strcmp(tmp, "unknown") == 0 || strcmp(tmp, "0") == 0) {
                                     newData->order->status = carStatus_unknown;
-                                } else if (strcmp(tmp, "ÔÚ¿â") == 0 || strcmp(tmp, "instock") == 0 || strcmp(tmp, "1") == 0) {
+                                } else if (strcmp(tmp, "åœ¨åº“") == 0 || strcmp(tmp, "instock") == 0 || strcmp(tmp, "1") == 0) {
                                     newData->order->status = carStatus_inStock;
-                                } else if (strcmp(tmp, "³ö¿â") == 0 || strcmp(tmp, "outstock") == 0 || strcmp(tmp, "2") == 0) {
+                                } else if (strcmp(tmp, "å‡ºåº“") == 0 || strcmp(tmp, "outstock") == 0 || strcmp(tmp, "2") == 0) {
                                     newData->order->status = carStatus_outStock;
-                                } else if (strcmp(tmp, "Ô¤¶¨") == 0 || strcmp(tmp, "reserved") == 0 || strcmp(tmp, "3") == 0) {
+                                } else if (strcmp(tmp, "é¢„å®š") == 0 || strcmp(tmp, "reserved") == 0 || strcmp(tmp, "3") == 0) {
                                     newData->order->status = carStatus_reserved;
-                                } else if (strcmp(tmp, "ÒÑÊÛ") == 0 || strcmp(tmp, "sold") == 0 || strcmp(tmp, "4") == 0) {
+                                } else if (strcmp(tmp, "å·²å”®") == 0 || strcmp(tmp, "sold") == 0 || strcmp(tmp, "4") == 0) {
                                     newData->order->status = carStatus_sold;
                                 } else {
                                     newData->order->status = carStatus_unknown;
@@ -781,8 +783,8 @@ void Action_append_new_data() {
                     while ((ch = getchar()) != '\n');
                     int bool_tmp = 0;
                     if (strcmp(tmp, "true") == 0 || strcmp(tmp, "True") == 0 || strcmp(tmp, "TRUE") == 0
-                    || strcmp(tmp, "1") == 0 || strcmp(tmp, "ÊÇ") == 0 || strcmp(tmp, "yes") == 0 || strcmp(tmp, "Yes") == 0
-                    || strcmp(tmp, "YES") == 0 || strcmp(tmp, "y") == 0 || strcmp(tmp, "Y") == 0 || strcmp(tmp, "ÊÇ") == 0 ||
+                    || strcmp(tmp, "1") == 0 || strcmp(tmp, "æ˜¯") == 0 || strcmp(tmp, "yes") == 0 || strcmp(tmp, "Yes") == 0
+                    || strcmp(tmp, "YES") == 0 || strcmp(tmp, "y") == 0 || strcmp(tmp, "Y") == 0 || strcmp(tmp, "æ˜¯") == 0 ||
                     strcmp(tmp, "v") == 0 || strcmp(tmp, "V") == 0) {
                         bool_tmp = 1;
                     }
@@ -810,11 +812,11 @@ void Action_append_new_data() {
         saveAsMdb(nodelinkpath->str, nodelink);
     //new one?
     char tmp[32] = { 0 };
-    printf("ÊÇ·ñ¼ÌĞøÌí¼Ó³µÁ¾ĞÅÏ¢£¿(y/n)£º");
+    printf("æ˜¯å¦ç»§ç»­æ·»åŠ è½¦è¾†ä¿¡æ¯ï¼Ÿ(y/n)ï¼š");
     scanf("%s", tmp);
     char ch;
     while ((ch = getchar()) != '\n');
-    if (strcmp(tmp, "y") == 0 || strcmp(tmp, "Y") == 0 || strcmp(tmp, "yes") == 0 || strcmp(tmp, "Yes") == 0 || strcmp(tmp, "YES") == 0 || strcmp(tmp, "ÊÇ") == 0 || strcmp(tmp, "ÊÇ") == 0 || strcmp(tmp, "v") == 0 || strcmp(tmp, "V") == 0) {
+    if (strcmp(tmp, "y") == 0 || strcmp(tmp, "Y") == 0 || strcmp(tmp, "yes") == 0 || strcmp(tmp, "Yes") == 0 || strcmp(tmp, "YES") == 0 || strcmp(tmp, "æ˜¯") == 0 || strcmp(tmp, "æ˜¯") == 0 || strcmp(tmp, "v") == 0 || strcmp(tmp, "V") == 0) {
         UI_append_new_data();
     } else {
         UI_MainMenu();
@@ -837,11 +839,11 @@ void Action_remove_data() {
     UI_MainMenu();
 }
 void Action_peek_data_case_NULL() {
-    MessageBox(NULL, "²éÑ¯ÎŞĞ§£¡Ã»ÓĞÕÒµ½Ïà¹Ø³µÁ¾ĞÅÏ¢£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "æŸ¥è¯¢æ— æ•ˆï¼æ²¡æœ‰æ‰¾åˆ°ç›¸å…³è½¦è¾†ä¿¡æ¯ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_peek_data_case_NULL;
 void Action_peek_data_case_NULLNL() {
-    MessageBox(NULL, "Ã»ÓĞ¼ÓÔØÊı¾İ¿â£¡", "´íÎó", MB_OK);
+    MessageBox(NULL, "æ²¡æœ‰åŠ è½½æ•°æ®åº“ï¼", "é”™è¯¯", MB_OK);
 }
 HANDLE HANDLE_Action_peek_data_case_NULLNL;
 void Action_peek_data() {
@@ -850,12 +852,12 @@ void Action_peek_data() {
         UI_MainMenu();
         WaitForSingleObject(HANDLE_Action_peek_data_case_NULLNL, INFINITE);
     }
-    ListNode* Rlinknode = shallowCloneListNodes(nodelink);//·ÀÖ¹°ÑÔ­À´µÄË³Ğò¸ÄÁË£¬×öÇ³²ã¿½±´
+    ListNode* Rlinknode = shallowCloneListNodes(nodelink);//é˜²æ­¢æŠŠåŸæ¥çš„é¡ºåºæ”¹äº†ï¼Œåšæµ…å±‚æ‹·è´
     ListNode* linknode = Rlinknode;
     /*
-    Éı½µĞòÑ¡Ôñ
+    å‡é™åºé€‰æ‹©
     */
-    printf("ÇëÑ¡ÔñÉı½µĞò(u/d£¬¿ÕÊÇu)£º");
+    printf("è¯·é€‰æ‹©å‡é™åº(u/dï¼Œç©ºæ˜¯u)ï¼š");
     char tmp[32] = { 0 };
     scanf("%s", tmp);
     char ch;
@@ -863,45 +865,45 @@ void Action_peek_data() {
     int UDM = UDMode_Up;
     if (strcmp(tmp, "u") == 0 || strcmp(tmp, "U") == 0 || strcmp(tmp, "up") == 0
     || strcmp(tmp, "Up") == 0 || strcmp(tmp, "UP") == 0 || strcmp(tmp, "0") == 0
-    || strcmp(tmp, "ÉÏ") == 0 || strcmp(tmp, "ÉÏÉı") == 0 || strcmp(tmp, "ÉÏÉıĞò") == 0
-    || strcmp(tmp, "ÉıĞò") == 0 || strcmp(tmp, "Éı") == 0) {
+    || strcmp(tmp, "ä¸Š") == 0 || strcmp(tmp, "ä¸Šå‡") == 0 || strcmp(tmp, "ä¸Šå‡åº") == 0
+    || strcmp(tmp, "å‡åº") == 0 || strcmp(tmp, "å‡") == 0) {
         UDM = UDMode_Up;
     } else if (strcmp(tmp, "d") == 0 || strcmp(tmp, "D") == 0 || strcmp(tmp, "down") == 0
     || strcmp(tmp, "Down") == 0 || strcmp(tmp, "DOWN") == 0 || strcmp(tmp, "1") == 0
-    || strcmp(tmp, "ÏÂ") == 0 || strcmp(tmp, "ÏÂ½µ") == 0 || strcmp(tmp, "ÏÂ½µĞò") == 0
-    || strcmp(tmp, "½µĞò") == 0 || strcmp(tmp, "½µ") == 0) {
+    || strcmp(tmp, "ä¸‹") == 0 || strcmp(tmp, "ä¸‹é™") == 0 || strcmp(tmp, "ä¸‹é™åº") == 0
+    || strcmp(tmp, "é™åº") == 0 || strcmp(tmp, "é™") == 0) {
         UDM = UDMode_Down;
     }
     UI_clearScreen();
     /*
-    É¸Ñ¡·½Ê½Ñ¡Ôñ
+    ç­›é€‰æ–¹å¼é€‰æ‹©
     */
     printf(
-"ÇëÑ¡ÔñÉ¸Ñ¡·½Ê½£¨Ä¬ÈÏ¿ÕÊÇ²»×öÉ¸Ñ¡£¬Ö§³Ö¶àÌõ¼şÑ¡Ôñ£¬ÁãÖµ´ò¶Ï£©£º\n\
-1.³µÁ¾±àºÅ£¨µ¥Ìõ²éÑ¯£©\n\
-2.³µÁ¾Æ·ÅÆ\n\
-3.³µÁ¾ĞÍºÅ\n\
-4.¼Û¸ñ\n\
-5.³µÁä\n\
-6.ÊÇ·ñÓĞ´óĞŞ\n\
-7.ÊÇ·ñÓĞ¹ÊÕÏ\n\
-8.×´Ì¬\n\
-9.ÈÕÆÚ\n\
-10.½ø¼Û\n\
-11.ÏúÊÛ¼Û\n\
-12.¹À¼Æ¼Û\n\
-13.ÊµÊÛ¼Û\n\
-14.ÔÚÊÛµ¥\n\
-15.Âô¼ÒĞÕÃû\n\
-16.Âô¼Òµç»°\n\
-17.Âò¼ÒĞÕÃû\n\
-18.Âò¼Òµç»°\n\
-19.¾­ÊÖÈËĞÕÃû\n\
-20.¾­ÊÖÈËµç»°\n\
-21.Ô±¹¤¹¤ºÅ\n\
-ÇëÑ¡Ôñ£º");
+"è¯·é€‰æ‹©ç­›é€‰æ–¹å¼ï¼ˆé»˜è®¤ç©ºæ˜¯ä¸åšç­›é€‰ï¼Œæ”¯æŒå¤šæ¡ä»¶é€‰æ‹©ï¼Œé›¶å€¼æ‰“æ–­ï¼‰ï¼š\n\
+1.è½¦è¾†ç¼–å·ï¼ˆå•æ¡æŸ¥è¯¢ï¼‰\n\
+2.è½¦è¾†å“ç‰Œ\n\
+3.è½¦è¾†å‹å·\n\
+4.ä»·æ ¼\n\
+5.è½¦é¾„\n\
+6.æ˜¯å¦æœ‰å¤§ä¿®\n\
+7.æ˜¯å¦æœ‰æ•…éšœ\n\
+8.çŠ¶æ€\n\
+9.æ—¥æœŸ\n\
+10.è¿›ä»·\n\
+11.é”€å”®ä»·\n\
+12.ä¼°è®¡ä»·\n\
+13.å®å”®ä»·\n\
+14.åœ¨å”®å•\n\
+15.å–å®¶å§“å\n\
+16.å–å®¶ç”µè¯\n\
+17.ä¹°å®¶å§“å\n\
+18.ä¹°å®¶ç”µè¯\n\
+19.ç»æ‰‹äººå§“å\n\
+20.ç»æ‰‹äººç”µè¯\n\
+21.å‘˜å·¥å·¥å·\n\
+è¯·é€‰æ‹©ï¼š");
     int findID = 0;
-    //ºÜÖØÒª£¡Ô¤ÏÈ¸æËß×î´ó¿Õ¼ä£¬·ÀÖ¹·­³µ£¡£¡£¡
+    //å¾ˆé‡è¦ï¼é¢„å…ˆå‘Šè¯‰æœ€å¤§ç©ºé—´ï¼Œé˜²æ­¢ç¿»è½¦ï¼ï¼ï¼
     int carItemLen = getTailNode(linknode)->index - getHeadNode(linknode)->index + 1;
     int QueryOptions[64] = { 0 };
     carInfoItem** carInfoItemList = NULL;
@@ -925,7 +927,7 @@ void Action_peek_data() {
             break;
         }
     }
-    for (qoi = 0;qoi < 64;qoi++) {//·è¿ñÉ¸Ñ¡¾ÍÊÇÁË
+    for (qoi = 0;qoi < 64;qoi++) {//ç–¯ç‹‚ç­›é€‰å°±æ˜¯äº†
         int QueryOption = QueryOptions[qoi];
         if (QueryOption == 0) {
             break;
@@ -933,7 +935,7 @@ void Action_peek_data() {
         switch (QueryOption) {
             case 1:
                 {
-                    printf("ÇëÑ¡Ôñ³µÁ¾±àºÅ£º");
+                    printf("è¯·é€‰æ‹©è½¦è¾†ç¼–å·ï¼š");
                     int carId = 0;
                     scanf("%d", &carId);
                     while ((ch = getchar()) != '\n');
@@ -952,7 +954,7 @@ void Action_peek_data() {
                 }
             case 2:
                 {
-                    printf("ÇëÑ¡Ôñ³µÁ¾Æ·ÅÆ£º");
+                    printf("è¯·é€‰æ‹©è½¦è¾†å“ç‰Œï¼š");
                     char carBrand[64] = { 0 };
                     scanf("%s", carBrand);
                     while ((ch = getchar()) != '\n');
@@ -970,7 +972,7 @@ void Action_peek_data() {
                 }
             case 3:
                 {
-                    printf("ÇëÑ¡Ôñ³µÁ¾ĞÍºÅ£º");
+                    printf("è¯·é€‰æ‹©è½¦è¾†å‹å·ï¼š");
                     char carModel[64] = { 0 };
                     scanf("%s", carModel);
                     while ((ch = getchar()) != '\n');
@@ -987,7 +989,7 @@ void Action_peek_data() {
                 }
             case 4:
                 {
-                    printf("ÇëÑ¡Ôñ³µÁ¾¼Û¸ñÇø¼ä£º");
+                    printf("è¯·é€‰æ‹©è½¦è¾†ä»·æ ¼åŒºé—´ï¼š");
                     int min = 0;
                     int max = 0;
                     scanf("%d", &min);
@@ -999,7 +1001,7 @@ void Action_peek_data() {
                 }
             case 5:
                 {
-                    printf("ÇëÑ¡Ôñ³µÁäÇø¼ä£º");
+                    printf("è¯·é€‰æ‹©è½¦é¾„åŒºé—´ï¼š");
                     int min = 0;
                     int max = 0;
                     scanf("%d", &min);
@@ -1011,15 +1013,15 @@ void Action_peek_data() {
                 }
             case 6:
                 {
-                    printf("ÇëÑ¡ÔñÊÇ·ñÓĞ´óĞŞµÄ·´Ñ¡£º");
+                    printf("è¯·é€‰æ‹©æ˜¯å¦æœ‰å¤§ä¿®çš„åé€‰ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
                     int UisRepair = Boolean_FALSE;
-                    if (strcmp(strtmp, "ÊÇ") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "true") == 0 || strcmp(strtmp, "True") == 0
+                    if (strcmp(strtmp, "æ˜¯") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "true") == 0 || strcmp(strtmp, "True") == 0
                     || strcmp(strtmp, "TRUE") == 0 || strcmp(strtmp, "YES") == 0 || strcmp(strtmp, "yes") == 0 || strcmp(strtmp, "Yes") == 0) {
                         UisRepair = Boolean_TRUE;
-                    } else if (strcmp(strtmp, "·ñ") == 0 || strcmp(strtmp, "0") == 0 || strcmp(strtmp, "false") == 0 || strcmp(strtmp, "False") == 0
+                    } else if (strcmp(strtmp, "å¦") == 0 || strcmp(strtmp, "0") == 0 || strcmp(strtmp, "false") == 0 || strcmp(strtmp, "False") == 0
                     || strcmp(strtmp, "FALSE") == 0 || strcmp(strtmp, "NO") == 0 || strcmp(strtmp, "no") == 0 || strcmp(strtmp, "No") == 0) {
                         UisRepair = Boolean_FALSE;
                     }
@@ -1029,15 +1031,15 @@ void Action_peek_data() {
                 }
             case 7:
                 {
-                    printf("ÇëÑ¡ÔñÊÇ·ñÓĞ¹ÊÕÏµÄ·´Ñ¡£º");
+                    printf("è¯·é€‰æ‹©æ˜¯å¦æœ‰æ•…éšœçš„åé€‰ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
                     int UisFault = Boolean_FALSE;
-                    if (strcmp(strtmp, "ÊÇ") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "true") == 0 || strcmp(strtmp, "True") == 0
+                    if (strcmp(strtmp, "æ˜¯") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "true") == 0 || strcmp(strtmp, "True") == 0
                     || strcmp(strtmp, "TRUE") == 0 || strcmp(strtmp, "YES") == 0 || strcmp(strtmp, "yes") == 0 || strcmp(strtmp, "Yes") == 0) {
                         UisFault = Boolean_TRUE;
-                    } else if (strcmp(strtmp, "·ñ") == 0 || strcmp(strtmp, "0") == 0 || strcmp(strtmp, "false") == 0 || strcmp(strtmp, "False") == 0
+                    } else if (strcmp(strtmp, "å¦") == 0 || strcmp(strtmp, "0") == 0 || strcmp(strtmp, "false") == 0 || strcmp(strtmp, "False") == 0
                     || strcmp(strtmp, "FALSE") == 0 || strcmp(strtmp, "NO") == 0 || strcmp(strtmp, "no") == 0 || strcmp(strtmp, "No") == 0) {
                         UisFault = Boolean_FALSE;
                     }
@@ -1047,18 +1049,18 @@ void Action_peek_data() {
                 }
             case 8:
                 {
-                    printf("ÇëÑ¡Ôñ×´Ì¬£º");
+                    printf("è¯·é€‰æ‹©çŠ¶æ€ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
                     int status = 0;
-                    if (strcmp(strtmp, "ÔÚ¿â") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "inStock") == 0) {
+                    if (strcmp(strtmp, "åœ¨åº“") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "inStock") == 0) {
                         status = 1;
-                    } else if (strcmp(strtmp, "³ö¿â") == 0 || strcmp(strtmp, "2") == 0 || strcmp(strtmp, "outStock") == 0) {
+                    } else if (strcmp(strtmp, "å‡ºåº“") == 0 || strcmp(strtmp, "2") == 0 || strcmp(strtmp, "outStock") == 0) {
                         status = 2;
-                    } else if (strcmp(strtmp, "Ô¤¶¨") == 0 || strcmp(strtmp, "3") == 0 || strcmp(strtmp, "reserved") == 0) {
+                    } else if (strcmp(strtmp, "é¢„å®š") == 0 || strcmp(strtmp, "3") == 0 || strcmp(strtmp, "reserved") == 0) {
                         status = 3;
-                    } else if (strcmp(strtmp, "ÒÑÊÛ") == 0 || strcmp(strtmp, "4") == 0 || strcmp(strtmp, "sold") == 0) {
+                    } else if (strcmp(strtmp, "å·²å”®") == 0 || strcmp(strtmp, "4") == 0 || strcmp(strtmp, "sold") == 0) {
                         status = 4;
                     }
                     carInfoItemList = QueryByCarStatus(linknode, status, &carItemLen);
@@ -1067,7 +1069,7 @@ void Action_peek_data() {
                 }
             case 9:
                 {
-                    printf("ÇëÑ¡ÔñÊ±¼ä¶Î(¸ñÊ½£ºy/m/d y/m/d)£º");
+                    printf("è¯·é€‰æ‹©æ—¶é—´æ®µ(æ ¼å¼ï¼šy/m/d y/m/d)ï¼š");
                     Date* start = (Date*)malloc(sizeof(Date));
                     Date* end = (Date*)malloc(sizeof(Date));
                     scanf("%d/%d/%d", &(start->year), &(start->month), &(start->day));
@@ -1079,7 +1081,7 @@ void Action_peek_data() {
                 }
             case 10:
                 {
-                    printf("ÇëÑ¡Ôñ½ø¼ÛÇø¼ä£º");
+                    printf("è¯·é€‰æ‹©è¿›ä»·åŒºé—´ï¼š");
                     int min = 0;
                     int max = 0;
                     scanf("%d", &min);
@@ -1091,7 +1093,7 @@ void Action_peek_data() {
                 }
             case 11:
                 {
-                    printf("ÇëÑ¡ÔñÏúÊÛ¼ÛÇø¼ä£º");
+                    printf("è¯·é€‰æ‹©é”€å”®ä»·åŒºé—´ï¼š");
                     int min = 0;
                     int max = 0;
                     scanf("%d", &min);
@@ -1103,7 +1105,7 @@ void Action_peek_data() {
                 }
             case 12:
                 {
-                    printf("ÇëÑ¡Ôñ¹À¼Æ¼ÛÇø¼ä£º");
+                    printf("è¯·é€‰æ‹©ä¼°è®¡ä»·åŒºé—´ï¼š");
                     int min = 0;
                     int max = 0;
                     scanf("%d", &min);
@@ -1115,7 +1117,7 @@ void Action_peek_data() {
                 }
             case 13:
                 {
-                    printf("ÇëÑ¡ÔñÊµÊÛ¼ÛÇø¼ä£¨Î´ÊÛÌîĞ´£º-1 -1£©£º");
+                    printf("è¯·é€‰æ‹©å®å”®ä»·åŒºé—´ï¼ˆæœªå”®å¡«å†™ï¼š-1 -1ï¼‰ï¼š");
                     int min = 0;
                     int max = 0;
                     scanf("%d", &min);
@@ -1127,15 +1129,15 @@ void Action_peek_data() {
                 }
             case 14:
                 {
-                    printf("ÇëÑ¡ÔñÔÚÊÛµ¥µÄ·´Ñ¡£º");
+                    printf("è¯·é€‰æ‹©åœ¨å”®å•çš„åé€‰ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
                     int UisInStock = Boolean_FALSE;
-                    if (strcmp(strtmp, "ÊÇ") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "true") == 0 || strcmp(strtmp, "True") == 0
+                    if (strcmp(strtmp, "æ˜¯") == 0 || strcmp(strtmp, "1") == 0 || strcmp(strtmp, "true") == 0 || strcmp(strtmp, "True") == 0
                     || strcmp(strtmp, "TRUE") == 0 || strcmp(strtmp, "YES") == 0 || strcmp(strtmp, "yes") == 0 || strcmp(strtmp, "Yes") == 0) {
                         UisInStock = Boolean_TRUE;
-                    } else if (strcmp(strtmp, "·ñ") == 0 || strcmp(strtmp, "0") == 0 || strcmp(strtmp, "false") == 0 || strcmp(strtmp, "False") == 0
+                    } else if (strcmp(strtmp, "å¦") == 0 || strcmp(strtmp, "0") == 0 || strcmp(strtmp, "false") == 0 || strcmp(strtmp, "False") == 0
                     || strcmp(strtmp, "FALSE") == 0 || strcmp(strtmp, "NO") == 0 || strcmp(strtmp, "no") == 0 || strcmp(strtmp, "No") == 0) {
                         UisInStock = Boolean_FALSE;
                     }
@@ -1145,7 +1147,7 @@ void Action_peek_data() {
                 }
             case 15:
                 {
-                    printf("ÇëÑ¡ÔñÂô¼ÒĞÕÃû£º");
+                    printf("è¯·é€‰æ‹©å–å®¶å§“åï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
@@ -1163,7 +1165,7 @@ void Action_peek_data() {
                 }
             case 16:
                 {
-                    printf("ÇëÑ¡ÔñÂô¼Òµç»°£º");
+                    printf("è¯·é€‰æ‹©å–å®¶ç”µè¯ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
@@ -1181,7 +1183,7 @@ void Action_peek_data() {
                 }
             case 17:
                 {
-                    printf("ÇëÑ¡ÔñÂò¼ÒĞÕÃû£º");
+                    printf("è¯·é€‰æ‹©ä¹°å®¶å§“åï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
@@ -1199,7 +1201,7 @@ void Action_peek_data() {
                 }
             case 18:
                 {
-                    printf("ÇëÑ¡ÔñÂò¼Òµç»°£º");
+                    printf("è¯·é€‰æ‹©ä¹°å®¶ç”µè¯ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
@@ -1217,7 +1219,7 @@ void Action_peek_data() {
                 }
             case 19:
                 {
-                    printf("ÇëÑ¡Ôñ¾­ÊÖÈËĞÕÃû£º");
+                    printf("è¯·é€‰æ‹©ç»æ‰‹äººå§“åï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
@@ -1235,7 +1237,7 @@ void Action_peek_data() {
                 }
             case 20:
                 {
-                    printf("ÇëÑ¡Ôñ¾­ÊÖÈËµç»°£º");
+                    printf("è¯·é€‰æ‹©ç»æ‰‹äººç”µè¯ï¼š");
                     char strtmp[64] = { 0 };
                     scanf("%s", strtmp);
                     while ((ch = getchar()) != '\n');
@@ -1253,7 +1255,7 @@ void Action_peek_data() {
                 }
             case 21:
                 {
-                    printf("ÇëÑ¡ÔñÔ±¹¤¹¤ºÅ£º");
+                    printf("è¯·é€‰æ‹©å‘˜å·¥å·¥å·ï¼š");
                     int empId = 0;
                     scanf("%d", &empId);
                     while ((ch = getchar()) != '\n');
@@ -1264,46 +1266,46 @@ void Action_peek_data() {
         }
         if (linknode != NULL) {
             linknode = getHeadNode(linknode);
-        } else {//Ã»ÓĞ¡­¡­
+        } else {//æ²¡æœ‰â€¦â€¦
             UI_clearScreen();
             HANDLE_Action_peek_data_case_NULL = (HANDLE)_beginthread(Action_peek_data_case_NULL, 0, NULL);
             UI_MainMenu();
             WaitForSingleObject(HANDLE_Action_peek_data_case_NULL, INFINITE);
             return;
         }
-        if (carInfoItemList != NULL) {//¼ÇµÃfree£¬ÒòÎªÊÇmalloc³öÀ´µÄ
+        if (carInfoItemList != NULL) {//è®°å¾—freeï¼Œå› ä¸ºæ˜¯mallocå‡ºæ¥çš„
             free(carInfoItemList);
         }
     }
     if (!findID) {
         UI_clearScreen();
         /*
-        ÅÅĞò·½Ê½Ñ¡Ôñ
+        æ’åºæ–¹å¼é€‰æ‹©
         */
         printf(
-    "ÇëÑ¡ÔñÅÅĞò·½Ê½£¨Ä¬ÈÏ¿ÕÊÇ¶ÁÈ¡Ë³Ğò£©£º\n\
-1.³µÁ¾±àºÅ\n\
-2.³µÁ¾Æ·ÅÆ\n\
-3.³µÁ¾ĞÍºÅ\n\
-4.¼Û¸ñ\n\
-5.³µÁä\n\
-6.ÊÇ·ñÓĞ´óĞŞ\n\
-7.ÊÇ·ñÓĞ¹ÊÕÏ\n\
-8.×´Ì¬\n\
-9.ÈÕÆÚ\n\
-10.½ø¼Û\n\
-11.ÏúÊÛ¼Û\n\
-12.¹À¼Æ¼Û\n\
-13.ÊµÊÛ¼Û\n\
-14.Âô¼ÒĞÕÃû\n\
-15.Âô¼Òµç»°\n\
-16.Âò¼ÒĞÕÃû\n\
-17.Âò¼Òµç»°\n\
-18.¾­ÊÖÈËĞÕÃû\n\
-19.¾­ÊÖÈËµç»°\n\
-20.Ô±¹¤ĞÕÃû\n\
-21.Ô±¹¤¹¤ºÅ\n\
-ÇëÑ¡Ôñ£º");
+    "è¯·é€‰æ‹©æ’åºæ–¹å¼ï¼ˆé»˜è®¤ç©ºæ˜¯è¯»å–é¡ºåºï¼‰ï¼š\n\
+1.è½¦è¾†ç¼–å·\n\
+2.è½¦è¾†å“ç‰Œ\n\
+3.è½¦è¾†å‹å·\n\
+4.ä»·æ ¼\n\
+5.è½¦é¾„\n\
+6.æ˜¯å¦æœ‰å¤§ä¿®\n\
+7.æ˜¯å¦æœ‰æ•…éšœ\n\
+8.çŠ¶æ€\n\
+9.æ—¥æœŸ\n\
+10.è¿›ä»·\n\
+11.é”€å”®ä»·\n\
+12.ä¼°è®¡ä»·\n\
+13.å®å”®ä»·\n\
+14.å–å®¶å§“å\n\
+15.å–å®¶ç”µè¯\n\
+16.ä¹°å®¶å§“å\n\
+17.ä¹°å®¶ç”µè¯\n\
+18.ç»æ‰‹äººå§“å\n\
+19.ç»æ‰‹äººç”µè¯\n\
+20.å‘˜å·¥å§“å\n\
+21.å‘˜å·¥å·¥å·\n\
+è¯·é€‰æ‹©ï¼š");
         int sortChoice = 0;
         scanf("%d", &sortChoice);
         while ((ch = getchar()) != '\n');
@@ -1382,34 +1384,34 @@ void Action_peek_data() {
     }
     UI_clearScreen();
     /*
-    ²é¿´ÏîÑ¡Ôñ
+    æŸ¥çœ‹é¡¹é€‰æ‹©
     */
     printf(
-"ÇëÑ¡Ôñ²é¿´Ïî£º£¨¿ÕÄ¬ÈÏÈ«²¿£¬¶àÑ¡ÔòÔÚÒ»ĞĞÒÔ¿Õ¸ñ¼ä¸ôÊäÈëÑ¡Ïî£¬Èç¹ûµÚÒ»¸öÖµÊÇ-1£¬ÄÇÃ´ÊÇ·´Ñ¡Ä£Ê½£¬½ÓÏÂÀ´ÊäÈëµÄÊÇ²»²é¿´µÄ£©\n\
-1.³µÁ¾±àºÅ(carId)\n\
-2.³µÁ¾Æ·ÅÆ(carBrand)\n\
-3.³µÁ¾ĞÍºÅ(carModel)\n\
-4.³µÁ¾Ô­¼Û(carPrice)\n\
-5.³µÁä(carAge)\n\
-6.ÊÇ·ñÓĞ´óĞŞ(hasRepair)\n\
-7.ÊÇ·ñÓĞ¹ÊÕÏ(hasFault)\n\
-8.¹ÊÕÏÃèÊö(faultDescribe)\n\
-9.×´Ì¬(status)\n\
-10.ÈÕÆÚ(date)\n\
-11.½ø¼Û(inPrice)\n\
-12.ÏúÊÛ¼Û(outPrice)\n\
-13.¹À¼Æ¼Û(estimatePrice)\n\
-14.ÊµÊÛ¼Û(realPrice)\n\
-15.Âô¼Ò(seller)\n\
-16.Âò¼Ò(buyer)\n\
-17.¾­ÊÖÈË(handler)\n\
-18.Ô±¹¤(employee)\n\
-19.ÈËÔ±µÄĞÕÃû(person_name)\n\
-20.ÈËÔ±µÄµç»°(person_phone)\n\
-21.ÈËÔ±µÄ¹¤ºÅ(person_id)\n\
-ÇëÑ¡Ôñ£º");
+"è¯·é€‰æ‹©æŸ¥çœ‹é¡¹ï¼šï¼ˆç©ºé»˜è®¤å…¨éƒ¨ï¼Œå¤šé€‰åˆ™åœ¨ä¸€è¡Œä»¥ç©ºæ ¼é—´éš”è¾“å…¥é€‰é¡¹ï¼Œå¦‚æœç¬¬ä¸€ä¸ªå€¼æ˜¯-1ï¼Œé‚£ä¹ˆæ˜¯åé€‰æ¨¡å¼ï¼Œæ¥ä¸‹æ¥è¾“å…¥çš„æ˜¯ä¸æŸ¥çœ‹çš„ï¼‰\n\
+1.è½¦è¾†ç¼–å·(carId)\n\
+2.è½¦è¾†å“ç‰Œ(carBrand)\n\
+3.è½¦è¾†å‹å·(carModel)\n\
+4.è½¦è¾†åŸä»·(carPrice)\n\
+5.è½¦é¾„(carAge)\n\
+6.æ˜¯å¦æœ‰å¤§ä¿®(hasRepair)\n\
+7.æ˜¯å¦æœ‰æ•…éšœ(hasFault)\n\
+8.æ•…éšœæè¿°(faultDescribe)\n\
+9.çŠ¶æ€(status)\n\
+10.æ—¥æœŸ(date)\n\
+11.è¿›ä»·(inPrice)\n\
+12.é”€å”®ä»·(outPrice)\n\
+13.ä¼°è®¡ä»·(estimatePrice)\n\
+14.å®å”®ä»·(realPrice)\n\
+15.å–å®¶(seller)\n\
+16.ä¹°å®¶(buyer)\n\
+17.ç»æ‰‹äºº(handler)\n\
+18.å‘˜å·¥(employee)\n\
+19.äººå‘˜çš„å§“å(person_name)\n\
+20.äººå‘˜çš„ç”µè¯(person_phone)\n\
+21.äººå‘˜çš„å·¥å·(person_id)\n\
+è¯·é€‰æ‹©ï¼š");
     int peekSize = 0;
-    int* peekparams = getPeekFullModeParam(&peekSize);//¼ÇµÃfree¡­¡­
+    int* peekparams = getPeekFullModeParam(&peekSize);//è®°å¾—freeâ€¦â€¦
     char peekchars[1024] = { 0 };
     int peeki = 0;
     char peekchar;
@@ -1428,15 +1430,15 @@ void Action_peek_data() {
             break;
         }
     }
-    if (ints[0] != -1) {//²»ÊÇ·´Ñ¡Ä£Ê½
+    if (ints[0] != -1) {//ä¸æ˜¯åé€‰æ¨¡å¼
         int j;
-        for (j = 0;j < peekSize;j++) {//ÖÃ0
+        for (j = 0;j < peekSize;j++) {//ç½®0
             peekparams[j] = 0;
         }
         for (j = 0;j < peekSize;j++) {
             peekparams[j] = ints[j];
         }
-    } else {//·´Ñ¡Ä£Ê½
+    } else {//åé€‰æ¨¡å¼
         int j;
         for (j = 1;j < intssize;j++) {
             int k;
@@ -1477,9 +1479,9 @@ void Action_showpeek(peekToolPage* pages, int curpage) {
         return;
     }
     StringItem* FIRSTPAGE = getPeekPage(pages, curpage);
-    printf("%s\n\nµÚ %d Ò³ / ¹² %d Ò³\n", FIRSTPAGE->str, curpage, pagelen);
-    printf("²ÎÊıËµÃ÷£ºÉÏÒ»Ò³£¨-1£© ÏÂÒ»Ò³£¨0£© µÚÄ³Ò³£¨int£© ÍË³ö£¨³¬³öË÷Òı¼´¿É£©\n\
-ÇëÊäÈëÒª²é¿´µÄÒ³£º");
+    printf("%s\n\nç¬¬ %d é¡µ / å…± %d é¡µ\n", FIRSTPAGE->str, curpage, pagelen);
+    printf("å‚æ•°è¯´æ˜ï¼šä¸Šä¸€é¡µï¼ˆ-1ï¼‰ ä¸‹ä¸€é¡µï¼ˆ0ï¼‰ ç¬¬æŸé¡µï¼ˆintï¼‰ é€€å‡ºï¼ˆè¶…å‡ºç´¢å¼•å³å¯ï¼‰\n\
+è¯·è¾“å…¥è¦æŸ¥çœ‹çš„é¡µï¼š");
     int peekpage = 0;
     scanf("%d", &peekpage);
     char ch;
@@ -1494,7 +1496,7 @@ void Action_showpeek(peekToolPage* pages, int curpage) {
     }
 }
 void Action_modify_data(ListNode* nodelink) {
-    printf("ÇëÊäÈëÒªĞŞ¸ÄµÄ³µÁ¾±àºÅ£¨È¡µµ£©£º");
+    printf("è¯·è¾“å…¥è¦ä¿®æ”¹çš„è½¦è¾†ç¼–å·ï¼ˆå–æ¡£ï¼‰ï¼š");
     int carId = 0;
     scanf("%d", &carId);
     char ch;
@@ -1507,13 +1509,13 @@ void Action_modify_data(ListNode* nodelink) {
         cur = cur->next;
     }
     printf(
-"¿ÉÑ¡²ÎÊıÁĞ±í£¨¼üÖµ£©£º\n\
-carId/³µÁ¾±àºÅ/carBrand/³µÁ¾Æ·ÅÆ/carModel/³µÁ¾ĞÍºÅ/carPrice/Ô­¼Û/carAge/³µÁä/\
-hasRepair/ÊÇ·ñÓĞ´óĞŞ/hasFault/ÊÇ·ñÓĞ¹ÊÕÏ/faultDescribe/¹ÊÕÏÃèÊö/status/×´Ì¬/date/ÈÕÆÚ/\
-inPrice/½ø¼Û/outPrice/ÏúÊÛ¼Û/estimatePrice/¹À¼Æ¼Û/realPrice/ÊµÊÛ¼Û/\
-sellerName/Âô¼ÒĞÕÃû/sellerPhone/Âô¼Òµç»°/buyerName/Âò¼ÒĞÕÃû/buyerPhone/Âò¼Òµç»°/\
-handlerName/¾­ÊÖÈËĞÕÃû/handlerPhone/¾­ÊÖÈËµç»°/employeeName/Ô±¹¤ĞÕÃû/employeeId/Ô±¹¤±àºÅ\n");
-    printf("ÇëÊäÈëÒªĞŞ¸ÄµÄ¼ü£º");
+"å¯é€‰å‚æ•°åˆ—è¡¨ï¼ˆé”®å€¼ï¼‰ï¼š\n\
+carId/è½¦è¾†ç¼–å·/carBrand/è½¦è¾†å“ç‰Œ/carModel/è½¦è¾†å‹å·/carPrice/åŸä»·/carAge/è½¦é¾„/\
+hasRepair/æ˜¯å¦æœ‰å¤§ä¿®/hasFault/æ˜¯å¦æœ‰æ•…éšœ/faultDescribe/æ•…éšœæè¿°/status/çŠ¶æ€/date/æ—¥æœŸ/\
+inPrice/è¿›ä»·/outPrice/é”€å”®ä»·/estimatePrice/ä¼°è®¡ä»·/realPrice/å®å”®ä»·/\
+sellerName/å–å®¶å§“å/sellerPhone/å–å®¶ç”µè¯/buyerName/ä¹°å®¶å§“å/buyerPhone/ä¹°å®¶ç”µè¯/\
+handlerName/ç»æ‰‹äººå§“å/handlerPhone/ç»æ‰‹äººç”µè¯/employeeName/å‘˜å·¥å§“å/employeeId/å‘˜å·¥ç¼–å·\n");
+    printf("è¯·è¾“å…¥è¦ä¿®æ”¹çš„é”®ï¼š");
     int i = 0;
     char key[1024] = { 0 };
     while ((ch = getchar()) != '\n') {
@@ -1522,7 +1524,7 @@ handlerName/¾­ÊÖÈËĞÕÃû/handlerPhone/¾­ÊÖÈËµç»°/employeeName/Ô±¹¤ĞÕÃû/employeeId/
     StringItem* KEY = trim(key, strlen(key));
     i = 0;
     char value[1024] = { 0 };
-    printf("ÇëÊäÈëÒªĞŞ¸ÄµÄÖµ£º");
+    printf("è¯·è¾“å…¥è¦ä¿®æ”¹çš„å€¼ï¼š");
     scanf("%s", value);
     while ((ch = getchar()) != '\n') {
         value[i++] = ch;
@@ -1533,7 +1535,7 @@ handlerName/¾­ÊÖÈËĞÕÃû/handlerPhone/¾­ÊÖÈËµç»°/employeeName/Ô±¹¤ĞÕÃû/employeeId/
     if (nodelinkpath != NULL)
         saveAsMdb(nodelinkpath->str, nodelink);
 
-    printf("ĞŞ¸Ä³É¹¦£¡\nÊÇ·ñ¼ÌĞø£¿£¨y/n£©£º");
+    printf("ä¿®æ”¹æˆåŠŸï¼\næ˜¯å¦ç»§ç»­ï¼Ÿï¼ˆy/nï¼‰ï¼š");
     char yn[8] = { 0 };
     scanf("%s", yn);
     while ((ch = getchar()) != '\n');
@@ -1562,7 +1564,7 @@ void Action_analysis_data(ListNode* nodelink) {
     printf("%s", a->employeeAnalyze->str);
     printf("%s", a->totalAnalyze->str);
     freeAnalyzerResult(a);
-    printf("\n»Ø³µ·µ»Ø£º");
+    printf("\nå›è½¦è¿”å›ï¼š");
     char ch;
     while ((ch = getchar()) != '\n');
     UI_MainMenu();

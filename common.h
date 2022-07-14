@@ -6,27 +6,28 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <conio.h>
 
  //Date
 typedef struct Date {
-    int year;//Äê
-    int month;//ÔÂ
-    int day;//ÈÕ
+    int year;//å¹´
+    int month;//æœˆ
+    int day;//æ—¥
 } Date;
 //BooleanDef
 enum BooleanDef {
     Boolean_TRUE = 1,
     Boolean_FALSE = 0
 };
-//×Ö·û´®
+//å­—ç¬¦ä¸²
 typedef struct StringItem {
-    char* str;//×Ö·û´®
-    int size;//×Ö·û´®³¤¶È
+    char* str;//å­—ç¬¦ä¸²
+    int size;//å­—ç¬¦ä¸²é•¿åº¦
 }StringItem;
-// //¼üÖµ¶Ô
+// //é”®å€¼å¯¹
 // typedef struct Pair {
-//     void* key;//¼ü
-//     void* value;//Öµ
+//     void* key;//é”®
+//     void* value;//å€¼
 // }Pair;
 
 

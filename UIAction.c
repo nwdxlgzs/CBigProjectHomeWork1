@@ -448,6 +448,7 @@ void Action_openMDB() {
         nodelink = readAllFromMdb(accitem->str);
         nodelinkpath = accitem;
     }
+    MessageBox(NULL, "完成导入！", "提示", MB_OK);
     if (nodelink == NULL) {
         HANDLE_Action_openMDB_sendMsg = (HANDLE)_beginthread(Action_openMDB_sendMsg, 0, NULL);
         UI_MainMenu();
@@ -503,6 +504,7 @@ void Action_txt_import(ListNode* Rnodelink) {
             saveAsMdb(tmppath, Rnodelink);
         }
     }
+    MessageBox(NULL, "完成导入！", "提示", MB_OK);
     UI_MainMenu();
 }
 void Action_export_mdb_NULLNL() {
@@ -550,12 +552,14 @@ void Action_export_mdb(ListNode* nodelink) {
         fwrite(&len, sizeof(int), 1, fp);
         fclose(fp);
         free(MDB_HEADER_TK);
+        MessageBox(NULL, "完成导出！", "提示", MB_OK);
         HANDLE_Action_export_mdb_NULLNL = (HANDLE)_beginthread(Action_export_mdb_NULLNL, 0, NULL);
         UI_MainMenu();
         WaitForSingleObject(HANDLE_Action_export_mdb_NULLNL, INFINITE);
         return;
     } else {
         saveAsMdb(mdbitem->str, nodelink);
+        MessageBox(NULL, "完成导出！", "提示", MB_OK);
         UI_MainMenu();
     }
 }
